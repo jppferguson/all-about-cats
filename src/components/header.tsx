@@ -7,7 +7,7 @@ const Header = () => {
       <h1>
         <a href="/">It&apos;s All About Cats</a>
       </h1>
-      <Button text="Upload" href="/upload" />
+      <Button text="Upload" href="/upload" icon="upload" />
     </header>
   );
 };

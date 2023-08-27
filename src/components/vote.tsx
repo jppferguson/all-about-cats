@@ -1,5 +1,6 @@
 'use client';
 import React, { FC } from 'react';
+import Icon from './icon';
 
 type VoteProps = {
   id: string;
@@ -15,10 +16,18 @@ const Vote: FC<VoteProps> = () => {
 
   return (
     <div className="flex flex-row justify-between p-4">
-      <button onClick={onClickUp}>Vote Up</button>
-      <div>5</div>
-      <button onClick={onClickDown}>Vote Down</button>
-      <div>5</div>
+      <div className="flex">
+        <button onClick={onClickUp}>
+          <Icon name="thumbsUp" size={14} className="mr-2" />
+        </button>
+        <div className="text-sm">5</div>
+      </div>
+      <div className="ml-4 flex">
+        <button onClick={onClickDown}>
+          <Icon name="thumbsDown" size={14} className="mr-2" />
+        </button>
+        <div className="text-sm">5</div>
+      </div>
     </div>
   );
 };
