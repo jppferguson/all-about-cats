@@ -118,7 +118,7 @@ export const Upload: FC = () => {
             <label className="flex flex-col items-center justify-center py-3 transition-colors duration-150 cursor-pointer hover:text-gray-600">
               <Icon name="upload" size={48} className="mb-2" />
               <strong className="text-sm font-medium">
-                Select an image to upload
+                Select a cat image to upload
               </strong>
               <input
                 className="block w-0 h-0"

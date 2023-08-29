@@ -21,7 +21,7 @@ const CatImage: FC<CatImageProps> = ({ id, imageUrl, favouriteId, score }) => {
           src={imageUrl}
           width={300}
           height={300}
-          className="object-cover"
+          className="object-cover w-full h-full"
         />
         <Favourite
           imageId={id}
