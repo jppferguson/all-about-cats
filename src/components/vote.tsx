@@ -1,12 +1,16 @@
 'use client';
 import React, { FC, useCallback, useState } from 'react';
 import Button from './button';
+import classNames from 'classnames';
+import Loading from './loading';
 
 type VoteProps = {
   imageId: string;
+  setScoreOffset: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Vote: FC<VoteProps> = ({ imageId }) => {
+const Vote: FC<VoteProps> = ({ imageId, setScoreOffset }) => {
+  const [isPlacingVote, setIsPlacingVote] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
   const handleVoteFavourite = useCallback(
     (votePositive: boolean) =>
@@ -15,6 +19,7 @@ const Vote: FC<VoteProps> = ({ imageId }) => {
         if (!imageId) {
           return;
         }
+        setIsPlacingVote(true);
 
         try {
           const response = await fetch('/api/vote', {
@@ -35,6 +40,7 @@ const Vote: FC<VoteProps> = ({ imageId }) => {
             throw new Error(error || 'Something went wrong');
           }
           setHasVoted(true);
+          setScoreOffset(votePositive ? 1 : -1);
         } catch (error) {
           console.error(error);
           alert(
@@ -42,14 +48,26 @@ const Vote: FC<VoteProps> = ({ imageId }) => {
               ? (error.message as string)
               : 'Something went wrong when casting your vote',
           );
+        } finally {
+          setIsPlacingVote(false);
         }
       },
-    [imageId],
+    [imageId, setScoreOffset],
   );
 
   return (
-    <div className="flex flex-col justify-between p-4">
-      <div className="flex justify-between">
+    <div className="flex flex-col justify-between p-4 relative">
+      {isPlacingVote && (
+        <Loading
+          text="Placing Vote..."
+          className="absolute right-0 left-0 top-0 bottom-0 z-10"
+        />
+      )}
+      <div
+        className={classNames('flex justify-between', {
+          'opacity-25 pointer-events-none': isPlacingVote,
+        })}
+      >
         <div className="flex">
           <Button
             type="button"

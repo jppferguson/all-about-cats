@@ -5,6 +5,7 @@ import Button from './button';
 import Image from 'next/image';
 import Icon from './icon';
 import classNames from 'classnames';
+import Loading from './loading';
 
 export const Upload: FC = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -92,9 +93,10 @@ export const Upload: FC = () => {
         className="w-full p-3 border border-gray-500 border-dashed relative"
       >
         {isUploading && (
-          <div className="absolute right-0 left-0 top-0 bottom-0 z-10 flex justify-center items-center">
-            <p className="bg-slate-800 px-4 py-2 rounded ">Uploading...</p>
-          </div>
+          <Loading
+            text="Uploading..."
+            className="absolute right-0 left-0 top-0 bottom-0 z-10"
+          />
         )}
         <div
           className={classNames('flex flex-col relative', {

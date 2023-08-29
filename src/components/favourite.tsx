@@ -2,6 +2,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import Icon from './icon';
 import classNames from 'classnames';
+import Loading from './loading';
 
 type FavouriteProps = {
   className: string;
@@ -10,6 +11,7 @@ type FavouriteProps = {
 };
 
 const Favourite: FC<FavouriteProps> = ({ className, imageId, favouriteId }) => {
+  const [isSavingFavourite, setIsSavingFavourite] = useState(false);
   const [favouriteIdLocal, setFavouriteIdLocal] = useState<number>();
   const isFavourite = !!favouriteIdLocal;
 
@@ -23,6 +25,7 @@ const Favourite: FC<FavouriteProps> = ({ className, imageId, favouriteId }) => {
       if (!imageId) {
         return;
       }
+      setIsSavingFavourite(true);
 
       try {
         const response = await fetch('/api/favourite', {
@@ -55,6 +58,8 @@ const Favourite: FC<FavouriteProps> = ({ className, imageId, favouriteId }) => {
             ? (error.message as string)
             : 'Something went wrong saving your favourite',
         );
+      } finally {
+        setIsSavingFavourite(false);
       }
     },
     [imageId, isFavourite, favouriteId],
@@ -62,6 +67,12 @@ const Favourite: FC<FavouriteProps> = ({ className, imageId, favouriteId }) => {
 
   return (
     <div className={classNames('flex flex-row justify-between p-4', className)}>
+      {isSavingFavourite && (
+        <Loading
+          text="Saving..."
+          className="absolute right-12 z-10 flex justify-center items-center"
+        />
+      )}
       <button onClick={handleSaveFavourite}>
         <Icon name={isFavourite ? 'heart' : 'heartOutline'} size={24} />
       </button>

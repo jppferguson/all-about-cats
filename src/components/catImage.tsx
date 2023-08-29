@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+'use client';
+import React, { FC, useState } from 'react';
 import Vote from './vote';
 import Favourite from './favourite';
 import Image from 'next/image';
@@ -11,6 +12,7 @@ type CatImageProps = {
 };
 
 const CatImage: FC<CatImageProps> = ({ id, imageUrl, favouriteId, score }) => {
+  const [scoreOffset, setScoreOffset] = useState(0);
   return (
     <div className="flex flex-col justify-between p-4">
       <div className="max-w-2xl relative flex justify-center">
@@ -26,9 +28,12 @@ const CatImage: FC<CatImageProps> = ({ id, imageUrl, favouriteId, score }) => {
           className="absolute right-5 top-5"
           favouriteId={favouriteId}
         />
-        <CatScore className="absolute bottom-2 left-2" score={score} />
+        <CatScore
+          className="absolute bottom-2 left-2"
+          score={score + scoreOffset}
+        />
       </div>
-      <Vote imageId={id} />
+      <Vote imageId={id} setScoreOffset={setScoreOffset} />
     </div>
   );
 };

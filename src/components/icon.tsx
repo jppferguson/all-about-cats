@@ -7,6 +7,7 @@ import {
   FaUpload,
   FaThumbsUp,
   FaThumbsDown,
+  FaSpinner,
 } from 'react-icons/fa';
 import { IoPawSharp, IoArrowBack } from 'react-icons/io5';
 
@@ -24,6 +25,7 @@ const IconMap = {
   heartOutline: FaRegHeart,
   upload: FaUpload,
   paw: IoPawSharp,
+  spinner: FaSpinner,
   thumbsDown: FaThumbsDown,
   thumbsUp: FaThumbsUp,
 };
