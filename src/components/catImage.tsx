@@ -25,7 +25,7 @@ const CatImage: FC<CatImageProps> = ({ id, imageUrl, favouriteId }) => {
           favouriteId={favouriteId}
         />
       </div>
-      <Vote id={id} />
+      <Vote imageId={id} />
     </div>
   );
 };

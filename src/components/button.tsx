@@ -2,7 +2,10 @@ import React, { FC } from 'react';
 import Icon, { IconName } from './icon';
 import classNames from 'classnames';
 
+type ButtonSize = 'sm' | 'md' | 'lg';
+
 type ButtonChildrenProps = {
+  size?: ButtonSize;
   text: string;
   icon?: IconName;
 };
@@ -24,12 +27,27 @@ type ButtonProps = ButtonBaseProps & {
 
 type AllButtonProps = ButtonLinkProps | ButtonProps;
 
-const ButtonChildren: FC<ButtonChildrenProps> = ({ icon, text }) => (
+const iconSizeMap: Record<ButtonSize, number> = {
+  sm: 12,
+  md: 16,
+  lg: 24,
+};
+const paddingClassSizeMap: Record<ButtonSize, string> = {
+  sm: 'py-1 px-3',
+  md: 'py-2 px-5',
+  lg: 'py-3 px-6',
+};
+
+const ButtonChildren: FC<ButtonChildrenProps> = ({ icon, text, size }) => (
   <>
     {icon && (
-      <Icon name={icon} size={16} className={classNames({ 'mr-2': text })} />
+      <Icon
+        name={icon}
+        size={iconSizeMap[size ?? 'md']}
+        className={classNames({ 'mr-2': text })}
+      />
     )}
-    {text}
+    <span className={`text-${size ?? 'md'}`}>{text}</span>
   </>
 );
 
@@ -37,6 +55,7 @@ const Button: FC<AllButtonProps> = ({
   className,
   disabled,
   icon,
+  size = 'md',
   text,
   ...props
 }) => {
@@ -44,14 +63,14 @@ const Button: FC<AllButtonProps> = ({
     props.href;
   }
   const allClassNames = classNames(
-    'flex flex-row py-2 px-5 border-current border rounded-md items-center disabled:opacity-40',
+    `flex flex-row ${paddingClassSizeMap[size]} border-current border rounded-md items-center disabled:opacity-40`,
     className,
   );
 
   if (props.type === 'link') {
     return (
       <a href={props.href} className={allClassNames}>
-        <ButtonChildren icon={icon} text={text} />
+        <ButtonChildren icon={icon} text={text} size={size} />
       </a>
     );
   }
@@ -61,7 +80,7 @@ const Button: FC<AllButtonProps> = ({
       disabled={disabled}
       onClick={props.onClick}
     >
-      <ButtonChildren icon={icon} text={text} />
+      <ButtonChildren icon={icon} text={text} size={size} />
     </button>
   );
 };

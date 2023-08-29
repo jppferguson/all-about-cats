@@ -41,7 +41,6 @@ export async function POST(request: NextRequest): Promise<FavouriteResponse> {
       });
     }
     const body = await response.json();
-    console.log({ body });
     return NextResponse.json({
       success: true,
       favouriteId: body.id,
