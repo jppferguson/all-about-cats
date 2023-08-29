@@ -26,7 +26,9 @@ type AllButtonProps = ButtonLinkProps | ButtonProps;
 
 const ButtonChildren: FC<ButtonChildrenProps> = ({ icon, text }) => (
   <>
-    {icon && <Icon name={icon} size={16} className="mr-2" />}
+    {icon && (
+      <Icon name={icon} size={16} className={classNames({ 'mr-2': text })} />
+    )}
     {text}
   </>
 );

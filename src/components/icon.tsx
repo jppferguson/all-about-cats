@@ -8,7 +8,7 @@ import {
   FaThumbsUp,
   FaThumbsDown,
 } from 'react-icons/fa';
-import { IoPawSharp } from 'react-icons/io5';
+import { IoPawSharp, IoArrowBack } from 'react-icons/io5';
 
 export type IconName = keyof typeof IconMap;
 
@@ -19,6 +19,7 @@ type IconProps = {
 };
 
 const IconMap = {
+  arrowBack: IoArrowBack,
   heart: FaHeart,
   heartOutline: FaRegHeart,
   upload: FaUpload,

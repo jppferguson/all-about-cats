@@ -6,7 +6,7 @@ export default function Home() {
     <main className="flex flex-col text-center p-24">
       <Upload />
       <div className="flex justify-center mt-12">
-        <Button type="link" href="/" text="&larr; Go back" />
+        <Button icon="arrowBack" type="link" href="/" text="Go back" />
       </div>
     </main>
   );
