@@ -45,8 +45,8 @@ export default async function Home() {
 }
 
 async function getCats(): Promise<Cat[]> {
-  const res = await fetch(`${process.env.API_BASE_URL}/images/?limit=12`, {
-    next: { revalidate: 30 },
+  const res = await fetch(`${process.env.API_BASE_URL}/images/?limit=48`, {
+    next: { revalidate: 1 },
     headers: {
       'x-api-key': process.env.API_KEY as string,
     },
@@ -61,7 +61,7 @@ async function getCats(): Promise<Cat[]> {
 
 async function getFavouriteCats(): Promise<FavouriteCat[]> {
   const res = await fetch(`${process.env.API_BASE_URL}/favourites`, {
-    next: { revalidate: 30 },
+    next: { revalidate: 1 },
     headers: {
       'x-api-key': process.env.API_KEY as string,
     },
@@ -76,7 +76,7 @@ async function getFavouriteCats(): Promise<FavouriteCat[]> {
 
 async function getVotes(): Promise<Vote[]> {
   const res = await fetch(`${process.env.API_BASE_URL}/votes`, {
-    next: { revalidate: 30 },
+    next: { revalidate: 1 },
     headers: {
       'x-api-key': process.env.API_KEY as string,
     },

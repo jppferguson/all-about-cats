@@ -135,7 +135,7 @@ export const Upload: FC = () => {
                 type="button"
                 className="mb-2 bg-slate-700"
                 onClick={handleUploadImageFile}
-                text="Upload file"
+                text="Upload image"
               />
               <Button
                 type="button"
