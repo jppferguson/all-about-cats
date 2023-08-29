@@ -2,8 +2,8 @@ import Button from '~/components/button';
 import CatImage from '~/components/catImage';
 
 export default async function Home() {
-  const cats: Cat[] = await getCats();
-
+  const cats = await getCats();
+  const favouriteCats = await getFavouriteCats();
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center justify-between p-24">
       {!cats.length ? (
@@ -20,15 +20,38 @@ export default async function Home() {
         </div>
       ) : (
         cats.map((cat: Cat) => (
-          <CatImage key={cat.id} id={cat.id} imageUrl={cat.url} />
+          <CatImage
+            key={cat.id}
+            id={cat.id}
+            imageUrl={cat.url}
+            favouriteId={
+              favouriteCats?.find(
+                (favouriteCat) => favouriteCat.image.id === cat.id,
+              )?.id
+            }
+          />
         ))
       )}
     </main>
   );
 }
 
-async function getCats() {
+async function getCats(): Promise<Cat[]> {
   const res = await fetch(`${process.env.API_BASE_URL}/images/?limit=10`, {
+    headers: {
+      'x-api-key': process.env.API_KEY as string,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
+
+async function getFavouriteCats(): Promise<FavouriteCat[]> {
+  const res = await fetch(`${process.env.API_BASE_URL}/favourites`, {
     headers: {
       'x-api-key': process.env.API_KEY as string,
     },
