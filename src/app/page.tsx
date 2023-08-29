@@ -4,6 +4,7 @@ import CatImage from '~/components/catImage';
 export default async function Home() {
   const cats = await getCats();
   const favouriteCats = await getFavouriteCats();
+  const votes = await getVotes();
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center justify-between p-24">
       {!cats.length ? (
@@ -24,6 +25,13 @@ export default async function Home() {
             key={cat.id}
             id={cat.id}
             imageUrl={cat.url}
+            score={votes
+              ?.filter((vote) => vote.image_id === cat.id)
+              .map((vote) => vote.value)
+              .reduce(
+                (previousValue, currentValue) => previousValue + currentValue,
+                0,
+              )}
             favouriteId={
               favouriteCats?.find(
                 (favouriteCat) => favouriteCat.image.id === cat.id,
@@ -52,6 +60,20 @@ async function getCats(): Promise<Cat[]> {
 
 async function getFavouriteCats(): Promise<FavouriteCat[]> {
   const res = await fetch(`${process.env.API_BASE_URL}/favourites`, {
+    headers: {
+      'x-api-key': process.env.API_KEY as string,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
+
+async function getVotes(): Promise<Vote[]> {
+  const res = await fetch(`${process.env.API_BASE_URL}/votes`, {
     headers: {
       'x-api-key': process.env.API_KEY as string,
     },

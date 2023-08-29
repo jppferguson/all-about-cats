@@ -17,3 +17,14 @@ type FavouriteCat = {
     url: string;
   };
 };
+
+type Vote = {
+  id: number;
+  image_id: string;
+  value: number;
+  created_at: string;
+  image: {
+    id: string;
+    url: string;
+  };
+};
